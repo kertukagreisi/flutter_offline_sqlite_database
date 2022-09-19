@@ -30,7 +30,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyHomePage> {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,11 +37,9 @@ class _MyAppState extends State<MyHomePage> {
         title: const Text("Offline App"),
       ),
       body: OfflineBuilder(
-        connectivityBuilder: (
-          BuildContext context,
-          ConnectivityResult connectivity,
-          Widget child,
-        ) {
+        connectivityBuilder: (BuildContext context,
+            ConnectivityResult connectivity,
+            Widget child,) {
           final bool connected = connectivity != ConnectivityResult.none;
 
           return Stack(
@@ -64,68 +61,67 @@ class _MyAppState extends State<MyHomePage> {
               Center(
                 child: connected
                     ? Center(
-                        child: Text(numbers.isEmpty
-                            ? 'No numbers saved offline!'
-                            : 'Last saved number when tha application was offline: \n'
-                                '${numbers[numbers.length - 1].number}!'))
+                    child: Text(numbers.isEmpty
+                        ? 'No numbers saved offline!'
+                        : 'Last saved number when tha application was offline: \n'
+                        '${numbers[numbers.length - 1].number}!'))
                     : Column(
-                        children: [
-                          Expanded(
-                            child: numbers.isEmpty
-                                ? const Center(
-                                    child: Text(
-                                      'Empty',
-                                    ),
-                                  )
-                                : ListView.builder(
-                                    padding: const EdgeInsets.only(top: 20),
-                                    itemCount: numbers.length,
-                                    itemBuilder: (build, index) => ListTile(
-                                      title: Text(
-                                          'Number ${numbers[index].number}'),
-                                      subtitle:
-                                          Text('ID: (${numbers[index].id})'),
-                                      leading: Text('${index + 1}'),
-                                      trailing: IconButton(
-                                        icon: const Icon(Icons.delete_forever),
-                                        onPressed: () async {
-                                          await _deleteNumber(
-                                              numbers[index].id);
-                                        },
-                                      ),
-                                    ),
-                                  ),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: ElevatedButton(
-                                  child: const Text('Get all numbers'),
-                                  onPressed: () async {
-                                    await _getNumbers();
-                                  },
-                                ),
+                  children: [
+                    Expanded(
+                      child: numbers.isEmpty
+                          ? const Center(
+                        child: Text(
+                          'Empty',
+                        ),
+                      )
+                          : ListView.builder(
+                        padding: const EdgeInsets.only(top: 20),
+                        itemCount: numbers.length,
+                        itemBuilder: (build, index) =>
+                            ListTile(
+                              title: Text(
+                                  'Number ${numbers[index].number}'),
+                              subtitle:
+                              Text('ID: (${numbers[index].id})'),
+                              leading: Text('${index + 1}'),
+                              trailing: IconButton(
+                                icon: const Icon(Icons.delete_forever),
+                                onPressed: () async {
+                                  await _deleteNumber(
+                                      numbers[index].id);
+                                },
                               ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: ElevatedButton(
-                                  child: const Text('Add'),
-                                  onPressed: () async {
-                                    await _insertNumber();
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
+                            ),
                       ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ElevatedButton(
+                            child: const Text('Get all numbers'),
+                            onPressed: () async {
+                              await _getNumbers();
+                            },
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ElevatedButton(
+                            child: const Text('Add'),
+                            onPressed: () async {
+                              await _insertNumber();
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ],
           );
-          builder:
-          (BuildContext context) {};
         },
         builder: (BuildContext context) {
           return const SizedBox();
