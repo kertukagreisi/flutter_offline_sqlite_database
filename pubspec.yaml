@@ -14,9 +14,10 @@ dependencies:
   sqflite:
   flutter_offline: "^2.1.0"
   uuid: 3.0.6
-
-
+  native_flutter_proxy: ^0.1.15
   cupertino_icons: ^1.0.2
+  http_proxy: ^1.2.0
+
 
 dev_dependencies:
   flutter_test:

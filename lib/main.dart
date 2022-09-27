@@ -1,12 +1,39 @@
 import 'dart:developer';
+import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_offline/flutter_offline.dart';
+import 'package:http_proxy/http_proxy.dart';
+import 'package:native_flutter_proxy/custom_proxy.dart';
+import 'package:native_flutter_proxy/native_proxy_reader.dart';
 import 'package:offline/service/sqlite_service.dart';
 
 import 'model/Number.dart';
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+
+  bool enabled = false;
+  String? host;
+  int? port;
+  try {
+    ProxySetting settings = await NativeProxyReader.proxySetting;
+    enabled = settings.enabled;
+    host = settings.host;
+    port = settings.port;
+  } catch (e) {
+    if (kDebugMode) {
+      print(e);
+    }
+  }
+  if (enabled && host != null) {
+    final proxy = CustomProxy(ipAddress: host, port: port);
+    proxy.enable();
+    if (kDebugMode) {
+      print("proxy enabled");
+    }
+  }
   runApp(const MaterialApp(home: MyApp()));
 }
 
